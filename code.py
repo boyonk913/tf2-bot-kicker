@@ -1,5 +1,6 @@
 import keyboard
 import os
+import requests
 import time as Clock
 
 ## Player List
@@ -9,9 +10,11 @@ players = list()
 chars = " !\"#$&'()*-+,./0123456789:;<=>?@[\\]^_{}|~abcdefghijklmnopqrstuvwxyzбвгджзклмнпрстфхцчшщаеёиоуыэюяйьъ"
 path = "C:/Program Files (x86)/Steam/steamapps/common/Team Fortress 2"
 botnames = list()
+botsteamids = list()
 output_player = False
 output_votekick = True
 clear_log = True
+online_database = True
 sleep_time = 5
 status_keybind = 71
 votekick_keybind = 72
@@ -103,14 +106,16 @@ class PlayerInstance:
     userid = 0
     name = ""
     time = 0
+    steamid = ""
 
-    def __init__(self, userid, name, time):
+    def __init__(self, userid, name, time, steamid):
         self.userid = userid
         self.name = name
         self.time = time
+        self.steamid = steamid
         
     def __str__(self):
-        return "PlayerInstance[userid:" + str(self.userid) + ",name:" + self.name + ",time:" + str(self.time) + "]"
+        return "PlayerInstance[userid:" + str(self.userid) + ",name:" + self.name + ",time:" + str(self.time) + ",steamid:" + self.steamid + "]"
 
 def setup():
     global tf2_status_keybind
@@ -118,7 +123,7 @@ def setup():
     with open("config.properties", "r",encoding="utf-8") as f:
         config = f.readlines()
     for line in config:
-        if not line.startswith("#"):
+        if not line.startswith("#") and not line == "":
             splitter = line.find("=")
             key = line[:splitter]
             value = line[splitter+1:].replace("\n","")
@@ -128,9 +133,6 @@ def setup():
             elif key == "chars":
                 global chars
                 chars = value
-            elif key == "botname":
-                global botnames
-                botnames.append(value)
             elif key == "output_player":
                 global output_player
                 output_player = value.lower().startswith("t")
@@ -151,6 +153,9 @@ def setup():
                 global votekick_keybind
                 votekick_keybind = key_convert.get(value, value)
                 tf2_votekick_keybind = value
+            elif key == "online_database":
+                global online_database
+                online_database = value.lower().startswith("t")
             else:
                 print("Ignoring key '" + key + "'")
         
@@ -186,12 +191,53 @@ def setup():
     with open(path + "/tf/console.log", "w", encoding="utf-8", errors="ignore") as f:
         f.close()
 
+def get_bots():
+    global botnames
+    global botsteamids
+    global online_database
+    if online_database:
+        online_file = requests.get("https://raw.githubusercontent.com/boyonkgit/tf2-bot-kicker/main/bots.properties").text.split("\n")
+        for line in online_file:
+            if not line.startswith("#") and not line == "":
+                splitter = line.find("=")
+                key = line[:splitter]
+                value = line[splitter+1:].replace("\n","")
+                if key == "name":
+                    botnames.append(value)
+                elif key == "steamid":
+                    botsteamids.append(value)
+                else:
+                    print("Ignoring key '" + key + "' in online database (do you have an outdated version?)")
 
+    with open("bots.properties", "r",encoding="utf-8") as f:
+        bots_file = f.readlines()
+    for line in bots_file:
+        if not line.startswith("#") and not line == "":
+            splitter = line.find("=")
+            key = line[:splitter]
+            value = line[splitter+1:].replace("\n","")
+            if key == "name":
+                botnames.append(value)
+            elif key == "steamid":
+                botsteamids.append(value)
+            elif key == "xname":
+                try:
+                    botnames.remove(value)
+                except:
+                    print("Name '" + value + "' was not found in list")
+            elif key == "xsteamid":
+                try:
+                    botsteamids.remove(value)
+                except:
+                    print("SteamID '" + value + "' was not found in list")
+            else:
+                print("Ignoring key '" + key + "' in bots.properties")
 
 
 
 ## Setup
 setup()
+get_bots()
 
 ## Main Loop
 while True:
@@ -240,8 +286,11 @@ while True:
                             name = name + c.lower()
                     # We then read the formatted time from the string and convert it into a number in seconds
                     time = timetoint(arguments[len(arguments)-4])
+                    
+                    steamid = arguments[len(arguments)-5]
                     # Lastly we create and append the new Player Instance
-                    new_players.append(PlayerInstance(userid,name,time))
+                    new_players.append(PlayerInstance(userid,name,time,steamid))
+                    
     # If we found any new players in our console, we will update the player list to all the players we found
     if len(new_players) > 0:
         players = new_players
@@ -260,9 +309,12 @@ while True:
         if output_player:
             print(str(player))
         # If the name of the player is in our list of botnames, we kick it
+        # Else if the steamid of the player is in our list of botsteamids, we kick it
         # Else if the name of the player matches another player name we already went over, we vote kick the newest player
         # Else (if nothing is wrong) we append the name to the list of checked players
         if player.name in botnames:
+            votekick(player)
+        elif player.steamid in botsteamids:
             votekick(player)
         elif player.name in checked_names:
             votekick(getnewest(player.name))

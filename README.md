@@ -29,6 +29,13 @@ This is done as follows:
 4. Under "Local Files" click "Browse..."
 5. Replace everything after 'path=' with the path to the folder you just opened
 6. Save the file, and you're done!
+
+## ADDING A BOT
+If you want to a specific bot based on their name or their steamid, you can do so in the `./bots.properties` file. As with the config,
+open it in a text editor and follow the documentation and styling to add a bot. If you truly believe the player is a hacker,
+consider commenting on an existing report in the bugtracker with more evidence, or, if there hasn't been a report, [creating an issue](https://github.com/boyonkgit/tf2-bot-kicker/issues/new) with "REPORT: \<name or steamid\>" in the title of the issue.
+If the report gets enough traction it will be added to the online database.
+
 ## WILL THIS GET ME BANNED?
 No. And here's why:
 - No code is changed on the client-side
