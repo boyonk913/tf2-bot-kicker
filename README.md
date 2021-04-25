@@ -39,7 +39,7 @@ You can also look in `./code.py` where I commented on what every piece of code d
 look in detail on how it works.
 
 ## HELP! IT DOESN'T WORK!
-Oh no! Look through the bugtracker and see if your issue can be found there. If not, consider [https://github.com/boyonkgit/tf2-bot-kicker/issues/new](creating an issue) and I'll try and get back to you.
+Oh no! Look through the bugtracker and see if your issue can be found there. If not, consider [creating an issue](https://github.com/boyonkgit/tf2-bot-kicker/issues/new) and I'll try and get back to you.
 
 ## I WANT TO CONTRIBUTE TO / ADAPT / CHANGE THE CODE
-Amazing! All help is appreciated! Consider forking the project and changing what you believe needs to be changed. Make sure you follow [https://github.com/boyonkgit/tf2-bot-kicker/blob/main/LICENSE.md](the license)
+Amazing! All help is appreciated! Consider forking the project and changing what you believe needs to be changed. Make sure you follow [the license](https://github.com/boyonkgit/tf2-bot-kicker/blob/main/LICENSE.md)
