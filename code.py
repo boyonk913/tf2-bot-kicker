@@ -11,7 +11,7 @@ path = "C:/Program Files (x86)/Steam/steamapps/common/Team Fortress 2"
 botnames = list()
 output_player = False
 output_votekick = True
-clear_log = 14
+clear_log = True
 sleep_time = 5
 status_keybind = 71
 votekick_keybind = 72
@@ -139,7 +139,7 @@ def setup():
                 output_votekick = value.lower().startswith("t")
             elif key == "clear_log":
                 global clear_log
-                clear_log = int(value)
+                clear_log = value.lower().startswith("t")
             elif key == "sleep_time":
                 global sleep_time
                 sleep_time = int(value)
@@ -251,8 +251,8 @@ while True:
     checked_names = list()
     
     # We empty the log if enabled
-    for i in range(clear_log):
-        print("\n")
+    if clear_log:
+        os.system("cls")
     
     # Next we go through every PlayerInstance in the list
     for player in players:
