@@ -42,4 +42,4 @@ look in detail on how it works.
 Oh no! Look through the bugtracker and see if your issue can be found there. If not, consider [creating an issue](https://github.com/boyonkgit/tf2-bot-kicker/issues/new) and I'll try and get back to you.
 
 ## I WANT TO CONTRIBUTE TO / ADAPT / CHANGE THE CODE
-Amazing! All help is appreciated! Consider forking the project and changing what you believe needs to be changed. Make sure you follow [the license](https://github.com/boyonkgit/tf2-bot-kicker/blob/main/LICENSE.md)
+Amazing! All help is appreciated! Consider forking the project and changing what you believe needs to be changed. Make sure you follow [the license](https://github.com/boyonkgit/tf2-bot-kicker/blob/main/LICENSE.md).
