@@ -6,13 +6,15 @@
 - [https://www.python.org/downloads/](Python 3 (or later))
 
 ## SETUP
-1. Startup Steam and go to your library
-2. Right-click on Team Fortress 2
-3. Click "Properties"
-4. Go to "General"
-5. Under "Launch Options" add `-condebug`
-6. Change `./config.properties` accordingly
-7. You're good to go!
+1. Download everything from [here](https://github.com/boyonkgit/tf2-bot-kicker/archive/refs/heads/main.zip)
+2. Unzip the file in a folder
+3. Startup Steam and go to your library
+4. Right-click on Team Fortress 2
+5. Click "Properties"
+6. Go to "General"
+7. Under "Launch Options" add `-condebug`
+8. Change `./config.properties` accordingly
+9. You're good to go! Simply run the script using `start.bat`!
 
 ## WILL THIS GET ME BANNED?
 No. And here's why:
