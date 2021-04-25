@@ -206,7 +206,7 @@ def get_bots():
                     botnames.append(value)
                 elif key == "steamid":
                     botsteamids.append(value)
-                else:
+                else if not key == "xname" and not key == "xsteamid":
                     print("Ignoring key '" + key + "' in online database (do you have an outdated version?)")
 
     with open("bots.properties", "r",encoding="utf-8") as f:
