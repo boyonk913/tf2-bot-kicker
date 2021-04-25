@@ -1,6 +1,6 @@
 # tf2-bot-kicker by boyonk
 
-### Love this? Wanna give something back, [buy me a coffee!](buymeacoff.ee/boyonk)
+### Love this? Wanna give something back? [buy me a coffee!](buymeacoff.ee/boyonk)
 
 ## REQUIREMENTS
 - Python 3 (or later)
