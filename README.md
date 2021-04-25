@@ -3,7 +3,7 @@
 ### Love this? Wanna give something back? [buy me a coffee!](buymeacoff.ee/boyonk)
 
 ## REQUIREMENTS
-- Python 3 (or later)
+- [https://www.python.org/downloads/](Python 3 (or later))
 
 ## SETUP
 1. Startup Steam and go to your library
@@ -37,3 +37,9 @@ After that, we send a different key press to the system, which TF2 will read.
 ### I wanna know more!
 You can also look in `./code.py` where I commented on what every piece of code does, so you can
 look in detail on how it works.
+
+## HELP! IT DOESN'T WORK!
+Oh no! Look through the bugtracker and see if your issue can be found there. If not, consider [https://github.com/boyonkgit/tf2-bot-kicker/issues/new](creating an issue) and I'll try and get back to you.
+
+## I WANT TO CONTRIBUTE TO / ADAPT / CHANGE THE CODE
+Amazing! All help is appreciated! Consider forking the project and changing what you believe needs to be changed. Make sure you follow [https://github.com/boyonkgit/tf2-bot-kicker/blob/main/LICENSE.md](the license)
