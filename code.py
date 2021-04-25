@@ -257,7 +257,7 @@ while True:
     # Next we go through every PlayerInstance in the list
     for player in players:
         # If we enabled the printing of players, we do so
-        if print_players:
+        if output_player:
             print(str(player))
         # If the name of the player is in our list of botnames, we kick it
         # Else if the name of the player matches another player name we already went over, we vote kick the newest player
