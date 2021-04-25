@@ -11,7 +11,7 @@
 3. Click "Properties"
 4. Go to "General"
 5. Under "Launch Options" add `-condebug`
-6. Change config.properties accordingly
+6. Change `./config.properties` accordingly
 7. You're good to go!
 
 ## WILL THIS GET ME BANNED?
