@@ -21,18 +21,18 @@ No. And here's why:
 - This program simply automates and recreates what you would do manually, but does it faster
 
 ## HOW DOES IT WORK?
-The program sends a key press to the system, which TF2 will read.
-TF2 responds by outputting the result of the `status` command in the console.
-Because we enabled `-condebug` in our Launch Options, the output of the console will
+- The program sends a key press to the system, which TF2 will read.
+- TF2 responds by outputting the result of the `status` command in the console.
+- Because we enabled `-condebug` in our Launch Options, the output of the console will
 be written to `/tf/console.log` in our TF2 files.
-We read the `/tf/console.log` and store all necessary information.
-Next, we go through the player list, and see if any name matches to the name of a bot
+- We read the `/tf/console.log` and store all necessary information.
+- Next, we go through the player list, and see if any name matches to the name of a bot
 we specified in our `./config.properties`.
-We also check if any name is in the list twice, and if so, we get the player with the shortest
+- We also check if any name is in the list twice, and if so, we get the player with the shortest
 connection time.
-If a bot is found, we write the required command to votekick it in `tf/cfg/votekick.cfg`.
+- If a bot is found, we write the required command to votekick it in `tf/cfg/votekick.cfg`.
 After that, we send a different key press to the system, which TF2 will read.
-TF2 will respond by executing the command stored in `tf/cfg/votekick.cfg` and starting a votekick.
+- TF2 will respond by executing the command stored in `tf/cfg/votekick.cfg` and starting a votekick.
 
 ### I wanna know more!
 You can also look in `./code.py` where I commented on what every piece of code does, so you can
