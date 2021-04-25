@@ -3,7 +3,7 @@
 ### Love this? Wanna give something back? [buy me a coffee!](buymeacoff.ee/boyonk)
 
 ## REQUIREMENTS
-- [https://www.python.org/downloads/](Python 3 (or later))
+- [Python 3 (or later)](https://www.python.org/downloads/)
 
 ## SETUP
 1. Download everything from [here](https://github.com/boyonkgit/tf2-bot-kicker/archive/refs/heads/main.zip)
