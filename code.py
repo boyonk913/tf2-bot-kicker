@@ -211,7 +211,7 @@ while True:
         f.close()
     
     ## Reading Console
-    
+    userids = list()
     new_players = list()
     
     # We go through every line in the console
@@ -229,17 +229,19 @@ while True:
             if not arguments[len(arguments)-2] == "BOT":
                 # We know that our first argument is the userid of the player
                 userid = arguments[1]
-                # We also know that the playername starts after the first '\"' in the string and that it ends at the last '\"' in the string, so we take everything in between
-                original_name = line[line.find("\"")+1:line.rfind("\"")]
-                name = ""
-                # We then go through every character in the original name, if it is not in our allowed chars set, we skip it
-                for c in original_name:
-                    if c.lower() in chars:
-                        name = name + c.lower()
-                # We then read the formatted time from the string and convert it into a number in seconds
-                time = timetoint(arguments[len(arguments)-4])
-                # Lastly we create and append the new Player Instance
-                new_players.append(PlayerInstance(userid,name,time))
+                if not userid in userids:
+                    userids.append(userid)
+                    # We also know that the playername starts after the first '\"' in the string and that it ends at the last '\"' in the string, so we take everything in between
+                    original_name = line[line.find("\"")+1:line.rfind("\"")]
+                    name = ""
+                    # We then go through every character in the original name, if it is not in our allowed chars set, we skip it
+                    for c in original_name:
+                        if c.lower() in chars:
+                            name = name + c.lower()
+                    # We then read the formatted time from the string and convert it into a number in seconds
+                    time = timetoint(arguments[len(arguments)-4])
+                    # Lastly we create and append the new Player Instance
+                    new_players.append(PlayerInstance(userid,name,time))
     # If we found any new players in our console, we will update the player list to all the players we found
     if len(new_players) > 0:
         players = new_players
