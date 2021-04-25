@@ -2,6 +2,9 @@
 
 ### Love this? Wanna give something back? [buy me a coffee!](buymeacoff.ee/boyonk)
 
+#### This bot kicker will be updated regularly, so make sure to check back here every week or so!
+#### I'm planning on implementing more code for different bot types, an online database, and an auto-updater
+
 ## REQUIREMENTS
 - [Python 3 (or later)](https://www.python.org/downloads/)
 
@@ -13,9 +16,19 @@
 5. Click "Properties"
 6. Go to "General"
 7. Under "Launch Options" add `-condebug`
-8. Change `./config.properties` accordingly
+8. Configure `./config.properties` to your wishes (see below)
 9. You're good to go! Simply run the script using `start.bat`!
 
+## CONFIGURING CONFIG.PROPERTIES
+Open the config.properties file with a simple text editor (I prefer Notepad++, regular Notepad will work as well)
+If there isn't anything specific you want to change and just want to make sure it runs, you only need to worry about the 'path' key.
+This is done as follows:
+1. Startup Steam and go to your library
+2. Right-click on Team Fortress 2
+3. Click "Properties"
+4. Under "Local Files" click "Browse..."
+5. Replace everything after 'path=' with the path to the folder you just opened
+ 
 ## WILL THIS GET ME BANNED?
 No. And here's why:
 - No code is changed on the client-side
