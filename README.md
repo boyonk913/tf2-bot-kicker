@@ -28,7 +28,7 @@ This is done as follows:
 3. Click "Properties"
 4. Under "Local Files" click "Browse..."
 5. Replace everything after 'path=' with the path to the folder you just opened
- 
+6. Save the file, and you're done!
 ## WILL THIS GET ME BANNED?
 No. And here's why:
 - No code is changed on the client-side
