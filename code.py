@@ -1,7 +1,8 @@
 import keyboard
 import os
 import requests
-import time as Clock
+from time import sleep
+from datetime import timedelta
 
 ## Player List
 players = list()
@@ -55,9 +56,9 @@ def timetoint(time):
         total = 0
         times = time.split(":")
         if len(times) == 2:
-            total = (int(times[0])*60)+int(times[1])
+            total = int(timedelta(hours=time[0],minutes=time[1]).total_seconds())
         elif len(times) == 3:
-            total = (int(times[0])*3600)+(int(times[1])*360)+int(times[2])
+            total = int(timedelta(hours=time[0],minutes=time[1],seconds=time[2]).total_seconds())
         return total
     except:
         return 0
@@ -72,16 +73,16 @@ def votekick(player):
             f.write("callvote kick " + str(player.userid))
             f.close()
         # We wait a bit so everything can catch up to speed
-        Clock.sleep(1)
+        sleep(1)
         # We send a key press to the system, which TF2 will read.
         keyboard.send(votekick_keybind)
         # TF2 will respond by executing the cfg file, and votekicking the bot
-        Clock.sleep(5)
+        sleep(5)
     except:
         # Sometimes if we update the file too fast, we can get a PermissionError
         # If this is the case, we simply wait for a while and try again later
         print("PermissionError, waiting")
-        Clock.sleep(10)
+        sleep(10)
 
 # This is used to find the player with the shortest connectiom time with the name of variable 'name'
 def getnewest(name):
@@ -241,7 +242,7 @@ get_bots()
 
 ## Main Loop
 while True:
-    Clock.sleep(sleep_time)
+    sleep(sleep_time)
     
     ## Quering Status
     
@@ -312,9 +313,7 @@ while True:
         # Else if the steamid of the player is in our list of botsteamids, we kick it
         # Else if the name of the player matches another player name we already went over, we vote kick the newest player
         # Else (if nothing is wrong) we append the name to the list of checked players
-        if player.name in botnames:
-            votekick(player)
-        elif player.steamid in botsteamids:
+        if (player.name in botnames) or (player.steamid in botsteamids):
             votekick(player)
         elif player.name in checked_names:
             votekick(getnewest(player.name))
