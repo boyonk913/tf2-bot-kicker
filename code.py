@@ -248,7 +248,7 @@ while True:
     
     # We send a key press to the system, which TF2 will read.
     keyboard.send(status_keybind)
-    Clock.sleep(1)
+    sleep(1)
     # Because we bound this key to the command "status", TF2 will output the status in the console.
     # We then read the console from the console.log file (which we enabled TF2 to output to in our startup settings)
     with open(path + "/tf/console.log", "r", encoding="utf-8", errors="ignore") as f:
