@@ -2,7 +2,6 @@ import keyboard
 import os
 import requests
 from time import sleep
-from datetime import timedelta
 
 ## Player List
 players = list()
@@ -56,9 +55,9 @@ def timetoint(time):
         total = 0
         times = time.split(":")
         if len(times) == 2:
-            total = int(timedelta(hours=time[0],minutes=time[1]).total_seconds())
+            total = (int(times[0])*60)+int(times[1])
         elif len(times) == 3:
-            total = int(timedelta(hours=time[0],minutes=time[1],seconds=time[2]).total_seconds())
+            total = (int(times[0])*3600)+(int(times[1])*360)+int(times[2])
         return total
     except:
         return 0
