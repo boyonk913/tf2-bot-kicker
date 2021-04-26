@@ -65,3 +65,6 @@ Oh no! Look through the bugtracker and see if your issue can be found there. If 
 
 ## I WANT TO CONTRIBUTE TO / ADAPT / CHANGE THE CODE
 Amazing! All help is appreciated! Consider forking the project and changing what you believe needs to be changed. Make sure you follow [the license](https://github.com/boyonkgit/tf2-bot-kicker/blob/main/LICENSE.md).
+
+## AMAZING CONTRIBUTORS
+- michaelshumshum
