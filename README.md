@@ -1,6 +1,6 @@
 # tf2-bot-kicker by boyonk
 
-### Love this? Wanna give something back? [buy me a coffee!](buymeacoff.ee/boyonk)
+### Love this? Wanna give something back? [buy me a coffee!](https://www.buymeacoff.ee/boyonk)
 
 #### This bot kicker will be updated regularly, so make sure to check back here every week or so!
 #### I'm planning on implementing more code for different bot types, an online database, and an auto-updater
