@@ -1,8 +1,10 @@
+#!/bin/python3
 import os
 import keyboard
 import re
 import requests
 from time import sleep
+import sys
 
 ### variables ------ ###
 players = list()
@@ -318,7 +320,10 @@ def detect():
     global clear_log
     checked_names = list()
     if clear_log:
-        os.system("cls")
+        if 'windows' not in sys.platform:
+            os.system('clear')
+        else:
+            os.system("cls")
     for player in players:
         if output_player:
             print(str(player))
