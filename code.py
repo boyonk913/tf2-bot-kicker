@@ -3,6 +3,15 @@ import keyboard
 import re
 import requests
 from time import sleep
+from kivy.app import App
+from kivy.clock import Clock
+from kivy.uix.widget import Widget
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.core.window import Window
+from kivy.config import Config
+Config.set('kivy', 'exit_on_escape', '0')
 
 ### variables ------ ###
 players = list()
@@ -374,12 +383,58 @@ def create_bk_execute():
 
 ### ---------------- ###
 
-### run ----------- ###
-def run():
-    setup()
-    while True:
-        sleep(sleep_time)
+class UI(Widget):
+    def setup(self):
+        teamredlabels = list()
+        teambluelabels = list()
+
+        layout = GridLayout(cols=2, size_hint=(1, 1), pos_hint={'top': 0})
+
+        for i in range(24):
+            if i%2 == 0:
+                l = Label(text="red")
+                teamredlabels.append(l)
+            else:
+                l = Label(text="blue")
+                teamredlabels.append(l)
+            layout.add_widget(l)
+
+        self.add_widget(layout)
+        # global players
+        # for player in players:
+        #     pass
+
+    def update(self, dt):
         tick()
 
+class UIManager(App):
 
-run()
+    def build(self):
+        self.ui = UI()
+        self.ui.setup()
+
+        setup()
+
+        Window.size = (1248, 500)
+        Window.clearcolor = (0.22, 0.22, 0.22, 1)
+        Window.bind(on_request_close=self.on_request_close)
+
+        Clock.schedule_interval(self.ui.update, sleep_time)
+        return self.ui
+
+    def on_request_close(self, *args):
+        os._exit(1)
+        return True
+
+### run ----------- ###
+# def run():
+#     setup()
+#     while True:
+#         sleep(sleep_time)
+#         tick()
+#
+#
+# run()
+
+if __name__ == '__main__':
+    UIManager().run()
