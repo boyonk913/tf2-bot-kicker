@@ -7,6 +7,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window
@@ -319,6 +320,7 @@ def read_console():
     userids = list()
     new_players = list()
     for line in raw_console:
+        print(line)
         if line.startswith("#") and not line.startswith("# userid"):
             arguments = list()
             for part in line.rstrip().split(" "):
@@ -388,7 +390,7 @@ class UI(Widget):
         teamredlabels = list()
         teambluelabels = list()
 
-        layout = GridLayout(cols=2, size_hint=(1, 1), pos_hint={'top': 0})
+        layout = GridLayout(cols=2, row_default_height=40, pos=(0,0), size=(500,500))
 
         for i in range(24):
             if i%2 == 0:
@@ -400,17 +402,18 @@ class UI(Widget):
             layout.add_widget(l)
 
         self.add_widget(layout)
-        # global players
-        # for player in players:
-        #     pass
+
 
     def update(self, dt):
         tick()
+        global players
+        for player in players:
+            pass
 
 class UIManager(App):
 
     def build(self):
-        self.ui = UI()
+        self.ui = UI(pos=(100,100), size=(500,500))
         self.ui.setup()
 
         setup()
