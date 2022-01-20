@@ -10,7 +10,7 @@ commands = list()
 raw_console = list()
 
 chars = " !\"#$&'()*-+,./0123456789:;<=>?@[\\]^_{}|~abcdefghijklmnopqrstuvwxyzбвгджзклмнпрстфхцчшщаеёиоуыэюяйьъ"
-path = "C:/Program Files (x86)/Steam/steamapps/common/Team Fortress 2"
+path = "/home/haywire/.local/share/Steam/steamapps/common/Team Fortress 2"
 botnames = list()
 botregexnames = list()
 botsteamids = list()
@@ -77,7 +77,7 @@ def get_newest(name):
         #If the player has the name we're searching for, we add it to the list
         if player.name == name:
             duplicates.append(player)
-    
+
     newestplayer = duplicates[0]
     # Next we go through every player, and if the player has a shorter connection time than our current value,
     # We set the newestplayer variable to the new player
@@ -88,18 +88,19 @@ def get_newest(name):
 
 ### classes -------- ###
 class PlayerInstance:
-    
+
     userid = 0
     name = ""
     time = 0
     steamid = ""
 
     def __init__(self, userid, name, time, steamid):
+        print(name)
         self.userid = userid
         self.name = name
         self.time = time
         self.steamid = steamid
-        
+
     def __str__(self):
         return "PlayerInstance[userid:" + str(self.userid) + ",name:" + self.name + ",time:" + str(self.time) + ",steamid:" + self.steamid + "]"
 
@@ -145,6 +146,7 @@ def read_config():
                 global query_keybind
                 global tf2_query_keybind
                 query_keybind = key_convert.get(value, value)
+                print("get status")
                 tf2_query_keybind = value
             elif key == "execute_keybind" or key == "votekick_keybind":
                 global execute_keybind
@@ -158,7 +160,7 @@ def read_config():
                 global auto_update
                 auto_update = value.lower().startswith("t")
             else:
-                print("Ignoring key '" + key + "'")                    
+                print("Ignoring key '" + key + "'")
 
 
 def check_update():
@@ -183,19 +185,20 @@ def check_update():
             else:
                 metadata = mapped
         if not metadata["version"] == online_metadata["version"]:
-            update()
+            # update()
+            pass
 
 
 def update():
     new_metadata =  requests.get("https://raw.githubusercontent.com/boyonkgit/tf2-bot-kicker/main/metadata.properties").text.replace("\r","")
     new_code = requests.get("https://raw.githubusercontent.com/boyonkgit/tf2-bot-kicker/main/code.py").text.replace("\r","")
-    
+
     with open("metadata.properties", "w", encoding="utf-8") as f:
         f.write(new_metadata)
 
     with open("code.py", "w", encoding="utf-8") as f:
         f.write(new_code)
-    
+
     exec(open("code.py",encoding="utf-8").read())
     exit()
 def setup_autoexec():
@@ -214,7 +217,7 @@ def setup_autoexec():
         with open(path + "/tf/cfg/autoexec.cfg", "a", encoding="utf-8") as f:
             f.write("\nexec \"bk_autoexec.cfg\"")
 
-  
+
 def create_bk_autoexec():
     with open(path + "/tf/cfg/bk_autoexec.cfg", "w", encoding="utf-8") as f:
         f.write("bind \"" + tf2_query_keybind + "\" \"exec bk_query.cfg\"\n")
@@ -226,15 +229,30 @@ def create_bk_query():
     with open(path + "/tf/cfg/bk_query.cfg", "w", encoding="utf-8") as f:
         f.write("status")
 
+def commid_to_usteamid(commid):
+    usteamid = []
+    usteamid.append('[U:1:')
+    steamidacct = int(commid) - 76561197960265728
+
+    usteamid.append(str(steamidacct) + ']')
+
+    return ''.join(usteamid)
+
 def get_bots():
     global botnames
     global botregexnames
     global botsteamids
     global online_database
-    
+
     files = list()
+    online_tf2db = list()
     if online_database:
         files.append(requests.get("https://raw.githubusercontent.com/boyonkgit/tf2-bot-kicker/main/bots.properties").text.split("\n"))
+        online_tf2db = requests.get("https://tf2bdd.pazer.us/v1/steamids").json()["players"]
+        b = list()
+        for p in online_tf2db:
+            b.append(f"steamid={commid_to_usteamid(p['steamid'])}")
+        files.append(b)
     with open("bots.properties", "r",encoding="utf-8") as f:
         files.append(f.readlines())
     for file in files:
@@ -317,8 +335,8 @@ def detect():
     global players
     global clear_log
     checked_names = list()
-    if clear_log:
-        os.system("cls")
+    # if clear_log:
+    #     os.system("clear")
     for player in players:
         if output_player:
             print(str(player))
@@ -345,7 +363,7 @@ def execute():
         create_bk_execute()
         sleep(1)
         keyboard.send(execute_keybind)
-    
+
 
 def create_bk_execute():
     global commands
