@@ -104,6 +104,7 @@ class PlayerInstance:
     time = 0
     steamid = ""
     team = ""
+    hacker = False
 
     def __init__(self, userid, name, time, steamid):
         self.userid = userid
@@ -377,6 +378,7 @@ def detect():
         checked_names.append(player.name)
 
 def votekick(player):
+    player.hacker = True
     global commands
     if output_votekick:
         print("Votekicking " + str(player))
@@ -413,15 +415,23 @@ class UI(Widget):
     def update(self, dt):
         tick()
         global players
-        if players:
+        # TODO: BUG: every other loop, the player.team is empty, look for solution, quickfix is to skip that loop
+        if players and players[0].team:
             self.redlayout.clear_widgets()
             self.bluelayout.clear_widgets()
+            self.teamredlabels = dict()
+            self.teambluelabels = dict()
             for player in players:
                 l = Label(text=player.name, size=(30,30))
+                if player.hacker:
+                    l.color = (1,0,0,1)
                 if player.team == "RED":
                     self.teamredlabels[player.name] = l
                 if player.team == "BLUE":
                     self.teambluelabels[player.name] = l
+            print("----------------------")
+            print("players ", len(players), " teamred ",len(self.teamredlabels))
+            print("----------------------")
             for n,l in self.teamredlabels.items():
                 self.redlayout.add_widget(l)
             for n,l in self.teambluelabels.items():
