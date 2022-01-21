@@ -103,9 +103,9 @@ class PlayerInstance:
     name = ""
     time = 0
     steamid = ""
+    team = ""
 
     def __init__(self, userid, name, time, steamid):
-        print(name)
         self.userid = userid
         self.name = name
         self.time = time
@@ -211,6 +211,7 @@ def update():
 
     exec(open("code.py",encoding="utf-8").read())
     exit()
+
 def setup_autoexec():
     if not os.path.isfile(path + "/tf/cfg/autoexec.cfg"):
         with open(path + "/tf/cfg/autoexec.cfg", "w", encoding="utf-8") as f:
@@ -237,7 +238,8 @@ def create_bk_autoexec():
 
 def create_bk_query():
     with open(path + "/tf/cfg/bk_query.cfg", "w", encoding="utf-8") as f:
-        f.write("status")
+        f.write("status\n")
+        f.write("tf_lobby_debug")
 
 def commid_to_usteamid(commid):
     usteamid = []
@@ -320,7 +322,6 @@ def read_console():
     userids = list()
     new_players = list()
     for line in raw_console:
-        print(line)
         if line.startswith("#") and not line.startswith("# userid"):
             arguments = list()
             for part in line.rstrip().split(" "):
@@ -341,6 +342,18 @@ def read_console():
         if len(new_players) > 0:
             global players
             players = new_players
+        if line.startswith("CTFLobbyShared"):
+            # CTFLobbyShared: ID:0002010f60ad264c  24 member(s), 0 pending
+            print(line)
+        if line.strip().startswith("Member["):
+            # Member[0] [U:1:238761885]  team = TF_GC_TEAM_DEFENDERS  type = MATCH_PLAYER
+            line = line.strip().split(" ")
+            for player in players:
+                if player.steamid == line[1]:
+                    if "DEFENDERS" in line[5]:
+                        player.team = "BLUE"
+                    elif "INVADERS" in line[5]:
+                        player.team = "RED"
 
 def detect():
     global players
@@ -386,29 +399,33 @@ def create_bk_execute():
 ### ---------------- ###
 
 class UI(Widget):
+    teamredlabels = dict()
+    teambluelabels = dict()
+    layout = BoxLayout(orientation='horizontal', size=(500,500), size_hint=(None, None))
+    redlayout = BoxLayout(orientation='vertical', size=(500,500), size_hint=(None, None))
+    bluelayout = BoxLayout(orientation='vertical', size=(500,500), size_hint=(None, None))
+
     def setup(self):
-        teamredlabels = list()
-        teambluelabels = list()
-
-        layout = GridLayout(cols=2, row_default_height=40, pos=(0,0), size=(500,500))
-
-        for i in range(24):
-            if i%2 == 0:
-                l = Label(text="red")
-                teamredlabels.append(l)
-            else:
-                l = Label(text="blue")
-                teamredlabels.append(l)
-            layout.add_widget(l)
-
-        self.add_widget(layout)
-
+        self.layout.add_widget(self.redlayout)
+        self.layout.add_widget(self.bluelayout)
+        self.add_widget(self.layout)
 
     def update(self, dt):
         tick()
         global players
-        for player in players:
-            pass
+        if players:
+            self.redlayout.clear_widgets()
+            self.bluelayout.clear_widgets()
+            for player in players:
+                l = Label(text=player.name, size=(30,30))
+                if player.team == "RED":
+                    self.teamredlabels[player.name] = l
+                if player.team == "BLUE":
+                    self.teambluelabels[player.name] = l
+            for n,l in self.teamredlabels.items():
+                self.redlayout.add_widget(l)
+            for n,l in self.teambluelabels.items():
+                self.bluelayout.add_widget(l)
 
 class UIManager(App):
 
